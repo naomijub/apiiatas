@@ -1,0 +1,15 @@
+{:objects
+ {:City
+  {:fields
+   {:iata {:type (non-null String)}
+    :airports {:type (list String)}
+    :airlines {:type (list String)}
+    :country {:type String}
+    :name {:type String}}}}
+
+ :queries
+ {:city_by_iata
+  {:type :City
+   :args
+   {:iata {:type String}}
+   :resolve :query/city-by-iata}}}
