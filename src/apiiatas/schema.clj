@@ -21,3 +21,9 @@
     :airlines ["jl" "jp" "dl" "un"]
     :country "JP"
     :name "Tokyo"}])
+
+(defn city-by-iata []
+  nil)
+
+(defn resolver-map []
+  {:query/city-by-iata city-by-iata})
