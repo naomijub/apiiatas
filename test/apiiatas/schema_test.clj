@@ -1,7 +1,7 @@
 (ns apiiatas.schema-test
   (:require [clojure.test :refer :all]
             [io.pedestal.test :refer :all]
-            [apiiatas.schema :refer [resolver-map city-by-iata]]
+            [apiiatas.schema :refer [resolver-map city-by-iata schema-parser load-schema]]
             [apiiatas.util :refer [every-not-empty?]]))
 
 (deftest resolver-map-test
@@ -17,3 +17,13 @@
       (is (every-not-empty? #{:iata :airport :airlines :country :name} (keys city))))
     (let [city (city-by-iata nil {:iata "QXP"} nil)]
       (is (= (:name city) "Tokyo")))))
+
+(deftest load-schema-test
+  (testing "schema-parser: schema.edn should be read as clj"
+    (is (map? (schema-parser "schema.edn")))
+    (is (every-not-empty? #{:objects :queries} (keys (schema-parser "schema.edn")))))
+  (testing "load-schema: returns lacinia GraphQL Schema"
+    (is (map? (load-schema)))
+    (is (every-not-empty?
+          (load-schema)
+          #{:ID :City :SubscriptionRoot :MutationRoot :QueryRoot}))))

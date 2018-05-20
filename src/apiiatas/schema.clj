@@ -1,4 +1,8 @@
-(ns apiiatas.schema)
+(ns apiiatas.schema
+  (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
+            [com.walmartlabs.lacinia.util :as util]
+            [com.walmartlabs.lacinia.schema :as schema]))
 
 (def cities
   [{:iata "SCL"
@@ -27,3 +31,15 @@
 
 (defn resolver-map []
   {:query/city-by-iata city-by-iata})
+
+(defn schema-parser [edn]
+  (-> (io/resource edn)
+      (slurp)
+      (edn/read-string)))
+
+(defn load-schema []
+  (-> (schema-parser "schema.edn")
+      (util/attach-resolvers (resolver-map))
+      (schema/compile)))
+
+#_(user/q  "{ city_by_iata(iata: \"UIO\") { name, airlines } }")
