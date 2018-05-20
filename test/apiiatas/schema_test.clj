@@ -13,4 +13,7 @@
   (testing "should return iata info"
     (let [city (city-by-iata nil {:iata "SCL"} nil)]
       (is (map? city))
-      (is (every-not-empty? #{:iata :airport :airlines :country :name} (keys city))))))
+      (is (= (:name city) "Santiago"))
+      (is (every-not-empty? #{:iata :airport :airlines :country :name} (keys city))))
+    (let [city (city-by-iata nil {:iata "QXP"} nil)]
+      (is (= (:name city) "Tokyo")))))

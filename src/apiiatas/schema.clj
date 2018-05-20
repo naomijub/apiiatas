@@ -22,8 +22,8 @@
     :country "JP"
     :name "Tokyo"}])
 
-(defn city-by-iata [context args value]
-  (first cities))
+(defn city-by-iata [context {iata :iata} value]
+  (first (filter #(= iata (:iata %)) cities)))
 
 (defn resolver-map []
   {:query/city-by-iata city-by-iata})
