@@ -12,6 +12,9 @@
                  [org.slf4j/jul-to-slf4j "1.7.22"]
                  [org.slf4j/jcl-over-slf4j "1.7.22"]
                  [org.slf4j/log4j-over-slf4j "1.7.22"]]
+  :plugins [[com.jakemccrary/lein-test-refresh "0.22.0"]
+            [lein-cljfmt "0.5.7"]
+            [lein-ancient "0.6.15"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency
@@ -19,4 +22,12 @@
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "apiiatas.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.3"]]}
              :uberjar {:aot [apiiatas.server]}}
-  :main ^{:skip-aot true} apiiatas.server)
+  :main ^{:skip-aot true} apiiatas.server
+  :test-refresh {:growl false
+                   :notify-on-success false
+                   :quiet true
+                   :changes-only true
+                   :stack-trace-depth nil
+                   :run-once false
+                   :watch-dirs ["src" "test"]
+                   :refresh-dirs ["src" "test"]})

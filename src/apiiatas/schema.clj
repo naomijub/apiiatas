@@ -29,8 +29,12 @@
 (defn city-by-iata [context {iata :iata} value]
   (first (filter #(= iata (:iata %)) cities)))
 
+(defn city-by-airport [context {airport-code :iata} value]
+  (first (filter #(some #{airport-code} (:airports %)) cities)))
+
 (defn resolver-map []
-  {:query/city-by-iata city-by-iata})
+  {:query/city-by-iata city-by-iata
+   :query/city-by-airport city-by-airport})
 
 (defn schema-parser [edn]
   (-> (io/resource edn)
