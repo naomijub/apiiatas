@@ -26,7 +26,7 @@
       (is (map? city))
       (is (= (:name city) "Sao Paulo"))
       (is (every-not-empty? #{:iata :airport :airlines :country :name} (keys city))))
-    (let [city (city-by-airport nil {:iata "QXP"} nil)]
+    (let [city (city-by-airport nil {:iata "NRT"} nil)]
       (is (= (:name city) "Tokyo")))))
 
 (deftest load-schema-test

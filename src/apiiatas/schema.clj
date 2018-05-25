@@ -30,7 +30,7 @@
   (first (filter #(= iata (:iata %)) cities)))
 
 (defn city-by-airport [context {airport-code :iata} value]
-  (first (filter #(some #{airport-code} (:airports %)) cities)))
+  (first (filter #(some #{airport-code} (:airport %)) cities)))
 
 (defn resolver-map []
   {:query/city-by-iata city-by-iata
