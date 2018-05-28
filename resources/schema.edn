@@ -12,7 +12,7 @@
   {:type :City
    :args {:iata {:type String}}
    :resolve :query/city-by-iata}
-  
+
   :city_by_airport
   {:type :City
    :args {:iata {:type String}}

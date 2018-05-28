@@ -3,12 +3,16 @@
   (:require [com.walmartlabs.lacinia.pedestal :as pedestal]
             [io.pedestal.http :as server]
             [io.pedestal.http.route :as route]
-            [apiiatas.schema :as schema]
-            [apiiatas.service :as service]))
+            [qbits.alia :as alia]
+            [qbits.hayt :as cql]
+            [apiiatas.schema :as schema]))
 
-(defonce runnable-service
-  (server/create-server (pedestal/service-map (schema/load-schema) {:graphiql true})))
+(defn create-session []
+  (let [cluster (alia/cluster {:contact-points ["localhost"]})]
+    (alia/connect cluster)))
 
 (defn -main [& args]
   (println "\nCreating your server...")
-  (server/start runnable-service))
+  (let [session (create-session)
+        runnable-service (server/create-server (pedestal/service-map (schema/load-schema session) {:graphiql true}))]
+    (server/start runnable-service)))

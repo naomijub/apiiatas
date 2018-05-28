@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS cities (
 CREATE INDEX IF NOT EXISTS cities_airports_idx ON geo.cities (airports);
 
 INSERT INTO cities (name, iata, country, airlines, airports) VALUES('Santiago',  'SCL', 'CL', {'lt'}, {'SCL'});
-INSERT INTO cities (name, iata, country, airlines, airports) VALUES('Sao Paulo', 'SAO', 'BR', {'lt', 'gl', 'av', 'az', 'un }, {'CGH', 'GRU'});
+INSERT INTO cities (name, iata, country, airlines, airports) VALUES('Sao Paulo', 'SAO', 'BR', {'lt', 'gl', 'av', 'az', 'un' }, {'CGH', 'GRU'});
 INSERT INTO cities (name, iata, country, airlines, airports) VALUES('Quito',     'UIO', 'EC', {'lt', 'lx'}, {'UIO'});
-INSERT INTO cities (name, iata, country, airlines, airports) VALUES('Tokyo',     'QXP', 'JP', {'jl' 'jp' 'dl' 'un}, {'HND', 'NRT'});
+INSERT INTO cities (name, iata, country, airlines, airports) VALUES('Tokyo',     'QXP', 'JP', {'jl', 'jp', 'dl', 'un'}, {'HND', 'NRT'});

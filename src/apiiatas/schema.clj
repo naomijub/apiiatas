@@ -1,49 +1,31 @@
 (ns apiiatas.schema
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
+            [qbits.alia :as alia]
+            [qbits.hayt :as cql]
             [com.walmartlabs.lacinia.util :as util]
             [com.walmartlabs.lacinia.schema :as schema]))
 
-(def cities
-  [{:iata "SCL"
-    :airport ["SCL"]
-    :airlines ["lt"]
-    :country "CL"
-    :name "Santiago"}
-   {:iata "SAO"
-    :airport ["CGH" "GRU"]
-    :airlines ["lt" "gl" "av" "az" "un"]
-    :country "BR"
-    :name "Sao Paulo"}
-   {:iata "UIO"
-    :airport ["UIO"]
-    :airlines ["lt" "lx"]
-    :country "EC"
-    :name "Quito"}
-   {:iata "QXP"
-    :airport ["HND" "NRT"]
-    :airlines ["jl" "jp" "dl" "un"]
-    :country "JP"
-    :name "Tokyo"}])
+(defn city-by-iata [session context {iata :iata} _]
+  (alia/execute session "USE geo;")
+  (alia/execute session (cql/select :cities (cql/where [[= :iata iata]]))))
 
-(defn city-by-iata [context {iata :iata} value]
-  (first (filter #(= iata (:iata %)) cities)))
+(defn city-by-airport [session context {iata :iata} _]
+  (alia/execute session "USE geo;")
+  (first (alia/execute session (cql/select :cities (cql/where [[:contains :airports iata]])))))
 
-(defn city-by-airport [context {airport-code :iata} value]
-  (first (filter #(some #{airport-code} (:airport %)) cities)))
-
-(defn resolver-map []
-  {:query/city-by-iata city-by-iata
-   :query/city-by-airport city-by-airport})
+(defn resolver-map [session]
+  {:query/city-by-iata (partial city-by-iata session)
+   :query/city-by-airport (partial city-by-airport session)})
 
 (defn schema-parser [edn]
   (-> (io/resource edn)
       (slurp)
       (edn/read-string)))
 
-(defn load-schema []
+(defn load-schema [session]
   (-> (schema-parser "schema.edn")
-      (util/attach-resolvers (resolver-map))
+      (util/attach-resolvers (resolver-map session))
       (schema/compile)))
 
 #_(user/q  "{ city_by_iata(iata: \"UIO\") { name, airlines } }")

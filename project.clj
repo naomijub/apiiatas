@@ -8,6 +8,8 @@
                  [io.pedestal/pedestal.jetty "0.5.3"]
                  [com.walmartlabs/lacinia "0.25.0"]
                  [com.walmartlabs/lacinia-pedestal "0.7.0"]
+                 [cc.qbits/alia "4.2.1"]
+                 [cc.qbits/hayt "4.0.1"]
                  [ch.qos.logback/logback-classic "1.1.8" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/jul-to-slf4j "1.7.22"]
                  [org.slf4j/jcl-over-slf4j "1.7.22"]
