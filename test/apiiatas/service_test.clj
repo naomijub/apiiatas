@@ -2,7 +2,6 @@
   (:require [clojure.test :refer :all]
             [io.pedestal.test :refer :all]
             [io.pedestal.http :as bootstrap]
-            [apiiatas.service :as service]
             [apiiatas.util :as util]))
 
 (deftest GQL-endpoint-funtions
