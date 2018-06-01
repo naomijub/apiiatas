@@ -13,6 +13,11 @@
    :args {:iata {:type String}}
    :resolve :query/city-by-iata}
 
+  :cities_by_iatas
+  {:type (list :City)
+   :args {:iatas {:type (list String)}}
+   :resolve :query/cities-by-iatas}
+
   :city_by_airport
   {:type :City
    :args {:iata {:type String}}

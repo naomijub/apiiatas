@@ -8,7 +8,11 @@
 
 (defn city-by-iata [session context {iata :iata} _]
   (alia/execute session "USE geo;")
-  (alia/execute session (cql/select :cities (cql/where [[= :iata iata]]))))
+  (first (alia/execute session (cql/select :cities (cql/where [[= :iata iata]])))))
+
+(defn cities-by-iatas [session context {iatas :iatas} _]
+  (alia/execute session "USE geo;")
+  (alia/execute session (cql/select :cities (cql/where [[:in :iata iatas]]))))
 
 (defn city-by-airport [session context {iata :iata} _]
   (alia/execute session "USE geo;")
@@ -16,6 +20,7 @@
 
 (defn resolver-map [session]
   {:query/city-by-iata (partial city-by-iata session)
+   :query/cities-by-iatas (partial cities-by-iatas session)
    :query/city-by-airport (partial city-by-airport session)})
 
 (defn schema-parser [edn]
