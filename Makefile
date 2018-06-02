@@ -6,3 +6,6 @@ seed-cassandra:
 
 run-performance-test:
 	artillery run performance/api-test.yml
+
+run:
+	lein run
