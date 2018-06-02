@@ -1,0 +1,30 @@
+config:
+  target: "http://localhost:8888"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      rampTo: 50
+      name: "Warm up the application"
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained max load"
+    - pause: 30
+    - duration: 100
+      arrivalRate: 100
+      name: "Stress"
+  defaults:
+    headers:
+      content-type: "application/graphql"
+
+scenarios:
+  - flow:
+    - post:
+        url: "/graphql"
+        body:
+          "{
+              cities_by_iatas(iatas: [\"UIO\", \"SAO\"]) {
+                airlines
+                airports
+                name
+              }
+          }"

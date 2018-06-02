@@ -3,3 +3,6 @@ run-cassandra:
 
 seed-cassandra:
 	docker exec -t graphql-cassandra cqlsh --debug -f /seed.cql
+
+run-performance-test:
+	artillery run performance/api-test.yml
