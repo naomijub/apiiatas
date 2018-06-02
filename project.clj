@@ -1,4 +1,4 @@
-(defproject apiiatas "0.0.1-SNAPSHOT"
+(defproject apiiatas "1.0.0"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -24,7 +24,7 @@
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "apiiatas.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.3"]]}
              :uberjar {:aot [apiiatas.server]}}
-  :main ^{:skip-aot true} apiiatas.server
+  :main ^{:skip-aot true} apiiatas.core
   :test-refresh {:growl false
                    :notify-on-success false
                    :quiet true
